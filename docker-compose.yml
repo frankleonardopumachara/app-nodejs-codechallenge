@@ -1,4 +1,5 @@
 version: "3.7"
+
 services:
   postgres:
     image: postgres:14
@@ -7,36 +8,28 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-<<<<<<< HEAD
 
-=======
->>>>>>> 982c2cc6854ca1333f818199f69b26f0c3165a9a
   zookeeper:
     image: confluentinc/cp-zookeeper:5.5.3
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
-<<<<<<< HEAD
 
-=======
->>>>>>> 982c2cc6854ca1333f818199f69b26f0c3165a9a
   kafka:
     image: confluentinc/cp-enterprise-kafka:5.5.3
-    depends_on: [zookeeper]
+    depends_on:
+      - zookeeper
     environment:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-<<<<<<< HEAD
       KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092"
-=======
->>>>>>> 982c2cc6854ca1333f818199f69b26f0c3165a9a
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_JMX_PORT: 9991
     ports:
-<<<<<<< HEAD
       - "9092:9092"
-    restart: "always"
+    restart: always
 
   transaction-svc:
     build:
@@ -50,9 +43,10 @@ services:
       - TRANSACTIONS_CREATED_TOPIC=transactions.created
       - TRANSACTIONS_VALIDATED_TOPIC=transactions.validated
       - KAFKA_GROUP_ID=transaction-svc
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres?schema=public
     ports:
       - "3000:3000"
+    restart: always
 
   antifraud-svc:
     build:
@@ -60,12 +54,9 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - kafka
-    restart: always
     environment:
       - KAFKA_BROKERS=kafka:29092
       - TRANSACTIONS_CREATED_TOPIC=transactions.created
       - TRANSACTIONS_VALIDATED_TOPIC=transactions.validated
       - KAFKA_GROUP_ID=antifraud-svc
-=======
-      - 9092:9092
->>>>>>> 982c2cc6854ca1333f818199f69b26f0c3165a9a
+    restart: always

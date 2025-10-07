@@ -80,7 +80,6 @@ You can use Graphql;
 When you finish your challenge, after forking a repository, you **must** open a pull request to our repository. There are no limitations to the implementation, you can follow the programming paradigm, modularization, and style that you feel is the most appropriate solution.
 
 If you have any questions, please let us know.
-<<<<<<< HEAD
 
 ## 🚀 How to run the infrastructure
 
@@ -163,5 +162,3 @@ If you have any questions, please let us know.
 Here is a snapshot of the `Transaction` table after creating some transactions:
 
 ![Transactions table](./docs/db-example.png)
-=======
->>>>>>> 982c2cc6854ca1333f818199f69b26f0c3165a9a
