@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Transaction {
+  transactionExternalId   String   @id @default(uuid())
+  accountExternalIdDebit  String
+  accountExternalIdCredit String
+  tranferTypeId           Int
+  value                   Float
+  status                  String // pending | approved | rejected
+  createdAt               DateTime @default(now())
+}
